@@ -61,15 +61,15 @@ namespace API.Controllers
         }
 
         [HttpPost("add-photo")]
-        public async Task<ActionResult<Photo>> AddPhoto([FromForm]IFormFile file)
+        public async Task<ActionResult<Photo>> AddPhoto([FromForm] IFormFile file)
         {
             var member = await memberRepository.GetMemberForUpdate(User.GetMemberId());
 
-            if(member == null) return BadRequest("Cannot update member");
+            if (member == null) return BadRequest("Cannot update member");
 
             var result = await photoService.UploadPhotoAsync(file);
 
-            if(result.Error != null) return BadRequest(result.Error.Message);
+            if (result.Error != null) return BadRequest(result.Error.Message);
 
             var photo = new Photo
             {
@@ -86,7 +86,7 @@ namespace API.Controllers
 
             member.Photos.Add(photo);
 
-            if(await memberRepository.SaveAllAsync()) return photo;
+            if (await memberRepository.SaveAllAsync()) return photo;
 
             return BadRequest("Problem adding photo");
         }
@@ -96,7 +96,7 @@ namespace API.Controllers
         {
             var member = await memberRepository.GetMemberForUpdate(User.GetMemberId());
 
-            if(member == null) return BadRequest("Cannot get member from token");
+            if (member == null) return BadRequest("Cannot get member from token");
 
             var photo = member.Photos.SingleOrDefault(x => x.Id == photoId);
 
@@ -116,13 +116,13 @@ namespace API.Controllers
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId)
         {
-                        var member = await memberRepository.GetMemberForUpdate(User.GetMemberId());
+            var member = await memberRepository.GetMemberForUpdate(User.GetMemberId());
 
-            if(member == null) return BadRequest("Cannot get member from token");
+            if (member == null) return BadRequest("Cannot get member from token");
 
             var photo = member.Photos.SingleOrDefault(x => x.Id == photoId);
 
-            if(photo == null || photo.Url == member.ImageUrl)
+            if (photo == null || photo.Url == member.ImageUrl)
             {
                 return BadRequest("This photo cannot be deleted");
             }
@@ -135,7 +135,7 @@ namespace API.Controllers
 
             member.Photos.Remove(photo);
 
-            if(await memberRepository.SaveAllAsync()) return Ok();
+            if (await memberRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Problem deleting the photo");
         }
