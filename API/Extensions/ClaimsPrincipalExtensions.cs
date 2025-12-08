@@ -1,6 +1,4 @@
-using System;
 using System.Security.Claims;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace API.Extensions;
 

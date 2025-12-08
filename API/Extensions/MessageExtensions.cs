@@ -1,8 +1,6 @@
-using System;
 using System.Linq.Expressions;
 using API.DTO;
 using API.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace API.Extensions;
 

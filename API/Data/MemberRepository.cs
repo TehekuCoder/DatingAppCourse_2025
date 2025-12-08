@@ -1,4 +1,3 @@
-using System;
 using API.Entities;
 using API.Helpers;
 using API.Interfaces;
@@ -53,11 +52,6 @@ public class MemberRepository(AppDbContext context) : IMemberRepository
             .Where(x => x.Id == memberId)
             .SelectMany(x => x.Photos)
             .ToListAsync();
-    }
-
-    public async Task<bool> SaveAllAsync()
-    {
-        return await context.SaveChangesAsync() > 0;
     }
 
     public void Update(Member member)
